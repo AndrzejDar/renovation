@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Renovation.API.Data;
+using Renovation.API.Mappings;
+using Renovation.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<RenovationDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationConnectionString")));
+
+builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
