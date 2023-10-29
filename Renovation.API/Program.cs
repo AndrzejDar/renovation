@@ -16,6 +16,7 @@ builder.Services.AddDbContext<RenovationDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationConnectionString")));
 
 builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+builder.Services.AddScoped<IProjectRepository, SQLProjectRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Renovation.API.Data;
 using Renovation.API.Models.Domain;
 using Renovation.API.Models.DTO;

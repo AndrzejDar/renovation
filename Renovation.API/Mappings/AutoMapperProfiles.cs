@@ -8,6 +8,9 @@ namespace Renovation.API.Mappings
     {
         public AutoMapperProfiles()
         {
+            //PROJECTS
+            CreateMap<Project, ProjectDto>().ReverseMap();
+            //REGIONS
             CreateMap<Region, RegionDto>().ReverseMap();
             CreateMap<AddRegionRequestDto, Region>().ReverseMap();
             CreateMap<UpdateRegionRequestDto, Region>().ReverseMap();
