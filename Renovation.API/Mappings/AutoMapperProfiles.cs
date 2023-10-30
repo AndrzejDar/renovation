@@ -10,6 +10,8 @@ namespace Renovation.API.Mappings
         {
             //PROJECTS
             CreateMap<Project, ProjectDto>().ReverseMap();
+            CreateMap<Project, AddProjectRequestDto>().ReverseMap();
+            CreateMap<Project, UpdateProjectRequestDto>().ReverseMap();
             //REGIONS
             CreateMap<Region, RegionDto>().ReverseMap();
             CreateMap<AddRegionRequestDto, Region>().ReverseMap();
