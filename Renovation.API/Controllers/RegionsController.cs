@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Renovation.API.CustomActionFilters;
 using Renovation.API.Data;
 using Renovation.API.Models.Domain;
 using Renovation.API.Models.DTO;
@@ -23,10 +24,12 @@ namespace Renovation.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
+            [FromQuery] string? sortBy, [FromQuery] bool isAscending,
+            [FromQuery] int pageNumber = 1, [FromQuery] int pageSize =1)
         {
             //Domain models
-            var regions = await regionRepository.GetAllAsync();
+            var regions = await regionRepository.GetAllAsync(filterOn,filterQuery,sortBy,isAscending, pageNumber, pageSize);
 
             //Map DM to DTOs   
             var regionsDto = mapper.Map<List<RegionDto>>(regions);
@@ -51,19 +54,24 @@ namespace Renovation.API.Controllers
         
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
-            //map DTO to Domain model
-            var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+            if (ModelState.IsValid)
+            {
+                //map DTO to Domain model
+                var regionDomainModel = mapper.Map<Region>(addRegionRequestDto);
 
-             regionDomainModel = await regionRepository.CreateAsync(regionDomainModel);  
+                regionDomainModel = await regionRepository.CreateAsync(regionDomainModel);
 
-            //Map Domanin model back to DTO
-            var regionDto = mapper.Map<RegionDto> (regionDomainModel);
+                //Map Domanin model back to DTO
+                var regionDto = mapper.Map<RegionDto>(regionDomainModel);
 
-            return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
+                return CreatedAtAction(nameof(GetById), new { id = regionDto.Id }, regionDto);
+            }
+            else return BadRequest(ModelState);
         }
 
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {   
             var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
