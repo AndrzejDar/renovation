@@ -5,7 +5,7 @@ namespace Renovation.API.Data
 {
     public class RenovationDbContext: DbContext
     {
-        public RenovationDbContext(DbContextOptions dbContextOptions): base(dbContextOptions)
+        public RenovationDbContext(DbContextOptions<RenovationDbContext> dbContextOptions): base(dbContextOptions)
         {
                
         }

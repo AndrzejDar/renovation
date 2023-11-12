@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Renovation.API.CustomActionFilters;
 using Renovation.API.Data;
@@ -10,6 +11,7 @@ namespace Renovation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RegionsController : ControllerBase
     {
         private readonly RenovationDbContext dbContext;
