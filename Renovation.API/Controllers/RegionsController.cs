@@ -11,7 +11,7 @@ namespace Renovation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+ 
     public class RegionsController : ControllerBase
     {
         private readonly RenovationDbContext dbContext;
@@ -26,6 +26,8 @@ namespace Renovation.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
             [FromQuery] string? sortBy, [FromQuery] bool isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize =1)
@@ -43,6 +45,7 @@ namespace Renovation.API.Controllers
         
         [HttpGet]
         [Route("{id:Guid}")]
+    
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var region = await regionRepository.GetByIdAsync(id);
@@ -53,7 +56,8 @@ namespace Renovation.API.Controllers
         }
 
         [HttpPost]
-        
+        //[Authorize(Roles = "Writer")]
+
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             if (ModelState.IsValid)
@@ -74,6 +78,7 @@ namespace Renovation.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {   
             var regionDomainModel = mapper.Map<Region>(updateRegionRequestDto);
@@ -89,7 +94,7 @@ namespace Renovation.API.Controllers
             return Ok(regionDto);
         }
         [HttpDelete]
-        [Route("{id:Guid}")]
+        [Route("{id:Guid}")]    
         public async  Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var regionDomainModel = await regionRepository.DeleteAsync(id);
