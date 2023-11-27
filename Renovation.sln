@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Renovation.API", "Renovation.API\Renovation.API.csproj", "{3E8C4258-BF21-408D-9ED7-F793B24A0CE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9608F44B-7A50-43BB-9C3D-3B33CD3370E7}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E8C4258-BF21-408D-9ED7-F793B24A0CE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8C4258-BF21-408D-9ED7-F793B24A0CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8C4258-BF21-408D-9ED7-F793B24A0CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8C4258-BF21-408D-9ED7-F793B24A0CE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B762F2F2-4842-41F1-8C2B-B1803A2B7DD6}
+	EndGlobalSection
+EndGlobal
