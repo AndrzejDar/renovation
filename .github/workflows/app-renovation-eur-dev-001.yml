@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core application to Web App app-renovation-eur-dev-001
+name: Build and deploy .NET Core application to Web App app-renovation-eur-dev-001-a
 on:
   push:
     branches:
