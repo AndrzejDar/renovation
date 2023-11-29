@@ -92,7 +92,8 @@ builder.Services.AddCors((options) => {
 
 var app = builder.Build();
 
-    var logger = app.Services.GetRequiredService<ILogger>();
+var loggerF = app.Services.GetRequiredService<ILoggerFactory>();
+var logger = loggerF.CreateLogger("Startup");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
