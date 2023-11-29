@@ -92,12 +92,20 @@ builder.Services.AddCors((options) => {
 
 var app = builder.Build();
 
+    var logger = app.Services.GetRequiredService<ILogger>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    logger.LogInformation("Application is running in Devleopment mode");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    logger.LogInformation("Application is running in Production mode");
+}
+
 
 app.UseHttpsRedirection();
 
