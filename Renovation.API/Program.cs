@@ -7,10 +7,19 @@ using Renovation.API.Mappings;
 using Renovation.API.Repositories;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Logging.AzureAppServices;
 
 var AllowLocalhost3000 = "_AllowLocalhost3000";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddAzureWebAppDiagnostics();
+builder.Services.Configure<AzureFileLoggerOptions>(options =>
+{
+    options.FileName = "logs-";
+    options.FileSizeLimit = 50 * 1024;
+    options.RetainedFileCountLimit = 3;
+});
 
 // Add services to the container.
 
