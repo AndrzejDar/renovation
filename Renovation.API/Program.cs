@@ -8,6 +8,8 @@ using Renovation.API.Repositories;
 using System.Text;
 using Microsoft.OpenApi.Models;
 
+var AllowLocalhost3000 = "_AllowLocalhost3000";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -85,7 +87,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddCors((options) => {
-    options.AddPolicy("AllowLocalhost3000", builder => builder.WithOrigins("https://localhost:3000").AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy(name: AllowLocalhost3000, policy => policy.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod());
 });
 
 var app = builder.Build();
@@ -98,6 +100,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(AllowLocalhost3000);
 
 app.UseAuthentication();
 
