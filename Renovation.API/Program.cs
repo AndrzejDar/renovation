@@ -55,8 +55,13 @@ builder.Services.AddSwaggerGen(options =>{
     );
 });
 
-builder.Services.AddDbContext<RenovationDbContext>(options=>
-options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationConnectionString")));
+
+//get connection strings from env/keyVault and fallback to appsettings.json
+builder.Services.AddDbContext<RenovationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationConnectionString"));
+}
+    );
 
 builder.Services.AddDbContext<RenovationAuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationAuthConnectionString")));
