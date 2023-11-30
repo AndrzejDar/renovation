@@ -9,10 +9,13 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Logging.AzureAppServices;
 
+//  Define cors policy name
 var AllowLocalhost3000 = "_AllowLocalhost3000";
 
+// Create Builder
 var builder = WebApplication.CreateBuilder(args);
 
+//Add Azure loger and its config
 builder.Logging.AddAzureWebAppDiagnostics();
 builder.Services.Configure<AzureFileLoggerOptions>(options =>
 {
@@ -21,10 +24,11 @@ builder.Services.Configure<AzureFileLoggerOptions>(options =>
     options.RetainedFileCountLimit = 3;
 });
 
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>{ 
     options.SwaggerDoc("v1", new OpenApiInfo { Title= "Renovations API", Version= "v1" });
@@ -56,23 +60,22 @@ builder.Services.AddSwaggerGen(options =>{
 });
 
 
-//get connection strings from env/keyVault and fallback to appsettings.json
+//add connection strings from azure appconfig or fallback to appsettings.json
 builder.Services.AddDbContext<RenovationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationConnectionString"));
-}
-    );
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationConnectionString")));
 
 builder.Services.AddDbContext<RenovationAuthDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("RenovationAuthConnectionString")));
 
+//add Repositories
 builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
 builder.Services.AddScoped<IProjectRepository, SQLProjectRepository>();
-
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
+//add Automapper
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
+//add identities
 builder.Services.AddIdentityCore<IdentityUser>().AddRoles<IdentityRole>()
     .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("Renovation")
     .AddEntityFrameworkStores<RenovationAuthDbContext>()
@@ -88,6 +91,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
+//add Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
     {
@@ -100,16 +104,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     });
 
+
+//Add Cors setup for localhost
 builder.Services.AddCors((options) => {
     options.AddPolicy(name: AllowLocalhost3000, policy => policy.WithOrigins("http://localhost:3000", "https://localhost:3000").AllowAnyHeader().AllowAnyMethod());
 });
 
 var app = builder.Build();
 
+//Configure logger
 var loggerF = app.Services.GetRequiredService<ILoggerFactory>();
 var logger = loggerF.CreateLogger("Startup");
 
-// Configure the HTTP request pipeline.
+// Configure Swagger to run on develop
 if (app.Environment.IsDevelopment())
 {
     logger.LogInformation("Application is running in Devleopment mode");

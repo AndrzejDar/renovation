@@ -5,7 +5,7 @@ namespace Renovation.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class Users2Controller : ControllerBase
     {
         [HttpGet]
          public IActionResult GetAllUsers()

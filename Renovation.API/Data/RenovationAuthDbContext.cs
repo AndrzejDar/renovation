@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Renovation.API.Models.Domain;
 
 namespace Renovation.API.Data
 {
@@ -9,6 +10,8 @@ namespace Renovation.API.Data
         public RenovationAuthDbContext(DbContextOptions<RenovationAuthDbContext> options) : base(options)
         {
         }
+
+        public DbSet<UserProfile> UserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +39,12 @@ namespace Renovation.API.Data
             };
 
             builder.Entity<IdentityRole>().HasData(roles);
+
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.UserProfile)
+                .WithOne(u => u.ApplicationUser)
+                .HasForeignKey<UserProfile>(u => u.ApplicationUserId)
+                .IsRequired();
         }
     }
 }
