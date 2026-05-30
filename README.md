@@ -14,6 +14,19 @@ Companion frontend: [renovation.FE](https://github.com/AndrzejDar/renovation.FE)
 - AutoMapper
 - Swagger / OpenAPI
 
+## Configuration
+
+The JWT signing key is not committed; supply it via `dotnet user-secrets` or an
+environment variable before running the API:
+
+```bash
+dotnet user-secrets init --project Renovation.API
+dotnet user-secrets set "Jwt:Key" "<your-256-bit-secret>" --project Renovation.API
+```
+
+`ConnectionStrings:RenovationConnectionString` and
+`ConnectionStrings:RenovationAuthConnectionString` can be overridden the same way.
+
 ## What's here
 
 The solution is organised around the repository pattern with two DbContexts —
