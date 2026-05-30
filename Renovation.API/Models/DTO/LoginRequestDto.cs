@@ -2,7 +2,7 @@
 
 namespace Renovation.API.Models.DTO
 {
-    public class LogitRequestDto
+    public class LoginRequestDto
     {
         [Required]
         [DataType(DataType.EmailAddress)]

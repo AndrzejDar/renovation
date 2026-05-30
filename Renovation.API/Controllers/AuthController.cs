@@ -24,37 +24,36 @@ namespace Renovation.API.Controllers
         //POST: /api/Auth/Register
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequestDto reqisterRequsetDto)
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto registerRequestDto)
         {
             var identityUser = new IdentityUser
             {
-                UserName = reqisterRequsetDto.Username,
-                Email = reqisterRequsetDto.Username
+                UserName = registerRequestDto.Username,
+                Email = registerRequestDto.Username
             };
 
-            var identityResult = await userManager.CreateAsync(identityUser, reqisterRequsetDto.Password);
-        
+            var identityResult = await userManager.CreateAsync(identityUser, registerRequestDto.Password);
+
             if (identityResult.Succeeded)
             {
                 //Add roles to user
-                if(reqisterRequsetDto.Roles != null && reqisterRequsetDto.Roles.Any())
+                if (registerRequestDto.Roles != null && registerRequestDto.Roles.Any())
                 {
-                    identityResult = await userManager.AddToRolesAsync(identityUser, reqisterRequsetDto.Roles);
-                    if(identityResult.Succeeded)
+                    var rolesResult = await userManager.AddToRolesAsync(identityUser, registerRequestDto.Roles);
+                    if (!rolesResult.Succeeded)
                     {
-                        return Ok("user was registerd");
+                        return BadRequest("User created but role assignment failed");
                     }
-
                 }
-
+                return Ok("User was registered");
             }
-            return BadRequest("Someting went wrong");
+            return BadRequest("Something went wrong");
         }
 
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] LogitRequestDto loginRequestDto)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             var user = await userManager.FindByEmailAsync(loginRequestDto.Username);
 
