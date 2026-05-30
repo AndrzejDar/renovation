@@ -1,9 +1,6 @@
 # Renovation API
 
-A .NET 7 REST API for a renovation-services platform. Personal full-stack project.
-
-Companion frontend: [renovation.FE](https://github.com/AndrzejDar/renovation.FE)
-(Next.js + TypeScript + shadcn/ui).
+A .NET 7 REST API for a renovation-services platform. Personal project.
 
 ## Stack
 
@@ -63,6 +60,5 @@ Swagger UI mounts at `https://localhost:<port>/swagger` (port from `launchSettin
 
 ## Status
 
-Not deployed publicly. Built as a personal full-stack exercise covering the
-backend half of the renovation services platform; the frontend lives in
-[renovation.FE](https://github.com/AndrzejDar/renovation.FE).
+Not deployed publicly. Built as a personal backend exercise for a renovation
+services platform.
